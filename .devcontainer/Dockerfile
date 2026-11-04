@@ -34,5 +34,11 @@ RUN git clone --depth 1 --branch "${UBLKSRV_VERSION}" https://github.com/ublk-or
     && ldconfig \
     && rm -rf /tmp/ublksrv
 
-ENV RUST_BACKTRACE=1
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends locales \
+    && echo 'en_US.UTF-8 UTF-8' > /etc/locale.gen \
+    && locale-gen \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 RUST_BACKTRACE=1
 WORKDIR /workspaces/netblk
