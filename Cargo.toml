@@ -1,0 +1,23 @@
+[package]
+name = "netblk"
+description = "A Rust ublk device backed by heterogeneous remote storage providers."
+authors = ["Matt Hambrecht <hambrechtmatt@gmail.com>"]
+version = "0.1.0"
+edition = "2024"
+repository = "https://github.com/mhambre/netblk"
+documentation = "https://docs.rs/netblk"
+license = "MIT OR Apache-2.0"
+readme = "README.md"
+keywords = ["ublk", "block-device", "storage", "linux", "async"]
+categories = ["filesystem", "asynchronous"]
+
+[lib]
+name = "netblk"
+path = "src/lib.rs"
+
+[[bin]]
+name = "netblk"
+path = "src/main.rs"
+
+[dependencies]
+compio = { version = "0.19.2", features = ["macros"] }
