@@ -1,4 +1,4 @@
 #[compio::main]
 async fn main() {
-    println!("Hello, world!");
+    panic!("This application is planned.");
 }
