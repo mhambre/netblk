@@ -19,5 +19,10 @@ path = "src/lib.rs"
 name = "netblk"
 path = "src/main.rs"
 
+[profile.profiling]
+inherits = "release"
+debug = 2
+strip = "none"
+
 [dependencies]
 compio = { version = "0.19.2", features = ["macros"] }
