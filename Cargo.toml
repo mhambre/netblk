@@ -2,7 +2,7 @@
 name = "netblk"
 description = "A Rust ublk device backed by heterogeneous remote storage providers."
 authors = ["Matt Hambrecht <hambrechtmatt@gmail.com>"]
-version = "0.1.0"
+version = "0.0.0"
 edition = "2024"
 repository = "https://github.com/mhambre/netblk"
 documentation = "https://docs.rs/netblk"
