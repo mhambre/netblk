@@ -9,7 +9,7 @@ RUN apt-get update \
         gdb gdbserver linux-perf heaptrack valgrind strace ltrace \
         bpftrace trace-cmd fio kmod udev util-linux e2fsprogs xfsprogs \
         ca-certificates curl git jq just ripgrep shellcheck \
-        bash-completion less procps psmisc python3 sudo \
+        bash-completion less man-db manpages manpages-dev procps psmisc python3 sudo \
     && rm -rf /var/lib/apt/lists/*
 
 RUN rustup component add clippy rustfmt rust-src

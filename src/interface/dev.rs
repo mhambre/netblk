@@ -1,8 +1,12 @@
 //! Interaction interface with the acutal ublk device
 
 use compio::fs::File;
+use compio::io::AsyncWriteAt;
 use std::os::fd::{FromRawFd, IntoRawFd};
 use std::path::Path;
+use std::u32;
+
+use crate::interface::structs;
 
 const UBLK_DEV_NODE: &str = "/dev/ublk-control";
 
@@ -18,6 +22,7 @@ impl ControlDevice {
         Self::open(Path::new(UBLK_DEV_NODE))
     }
 
+    /// Opens a compio file from a raw file descriptor conversion
     fn open(path: &Path) -> std::io::Result<Self> {
         let file = std::fs::OpenOptions::new()
             .read(true)
@@ -29,6 +34,27 @@ impl ControlDevice {
         let file = unsafe { File::from_raw_fd(fd) };
 
         Ok(Self { file })
+    }
+
+    /// Instantiates a new user device
+    async fn add(&self, nr_hw_queues: u16, queue_depth: u16, max_io_buf_bytes: u32) {
+        let msg = structs::UblkSrvCtrlDevInfo {
+            nr_hw_queues.min(1),
+            queue_depth.min(1),
+            max_io_buf_bytes.min(1 << 20),
+            dev_id: u32::MAX, // kernel decides for us
+            ..Default::default()
+        };
+    }
+
+    /// Stops request handling for the user device
+    async fn stop() {
+        unimplemented!()
+    }
+
+    /// Removes the user device id to make it allocatable
+    async fn remove() {
+        unimplemented!()
     }
 
     /// Get the raw control file
@@ -119,7 +145,6 @@ mod tests {
 
     #[cfg(target_os = "linux")]
     #[test]
-    #[ignore = "requires access to /dev/ublk-control"]
     fn opens_ublk_control_device() {
         use std::os::fd::AsFd;
 
