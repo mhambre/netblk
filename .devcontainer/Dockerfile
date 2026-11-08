@@ -1,3 +1,5 @@
+FROM node:24-trixie-slim AS node
+
 FROM rust:1-trixie
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
@@ -9,7 +11,7 @@ RUN apt-get update \
         gdb gdbserver linux-perf heaptrack valgrind strace ltrace \
         bpftrace trace-cmd fio kmod udev util-linux e2fsprogs xfsprogs \
         ca-certificates curl git jq just ripgrep shellcheck \
-        bash-completion less man-db manpages manpages-dev procps psmisc python3 sudo \
+        bash-completion less man-db manpages manpages-dev procps psmisc python3 sudo vim libatomic1 \
     && rm -rf /var/lib/apt/lists/*
 
 RUN rustup component add clippy rustfmt rust-src
@@ -39,6 +41,14 @@ RUN apt-get update \
     && echo 'en_US.UTF-8 UTF-8' > /etc/locale.gen \
     && locale-gen \
     && rm -rf /var/lib/apt/lists/*
+
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
+    && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx \
+    && node --version \
+    && npm --version \
+    && npx --version
 
 ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 RUST_BACKTRACE=1
 WORKDIR /workspaces/netblk
