@@ -8,7 +8,7 @@ fi
 
 failed=0
 printf 'Linux %s (%s)\n\n' "$(uname -r)" "$(uname -m)"
-for tool in cargo rustc just gdb lldb perf heaptrack heaptrack_print valgrind strace ltrace fio bpftrace trace-cmd ublk; do
+for tool in cargo rustc just node npm npx vi vim gdb lldb perf heaptrack heaptrack_print valgrind strace ltrace fio bpftrace trace-cmd ublk; do
     if command -v "$tool" >/dev/null 2>&1; then
         printf '  OK    %s\n' "$tool"
     else

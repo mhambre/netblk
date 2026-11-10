@@ -25,4 +25,9 @@ debug = 2
 strip = "none"
 
 [dependencies]
-compio = { version = "0.19.2", features = ["macros"] }
+compio = { version = "0.19.2", features = ["macros", "fs"] }
+compio-driver = "0.12.5"
+tracing = "0.1.44"
+
+[dev-dependencies]
+tempfile = "3"
